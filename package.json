@@ -1,0 +1,21 @@
+{
+  "name": "stranded-choices",
+  "version": "1.0.0",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "esrun": "^3.2.26",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.12"
+  }
+}
