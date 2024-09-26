@@ -20,6 +20,10 @@ class StartPage {
         document.querySelector("#btnStart")?.addEventListener("click", function () {
             window.location.href = "/dist/views/game.html";
         });
+
+        document.querySelector("#btnCredits")?.addEventListener("click", function () {
+
+        })
     }
 }
 

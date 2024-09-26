@@ -24,9 +24,11 @@ class GamePage {
 }
 class StartPage {
     Start() {
-        var _a;
+        var _a, _b;
         (_a = document.querySelector("#btnStart")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
             window.location.href = "/dist/views/game.html";
+        });
+        (_b = document.querySelector("#btnCredits")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
         });
     }
 }
