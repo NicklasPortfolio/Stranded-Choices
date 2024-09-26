@@ -1,29 +1,53 @@
-const DOMObjectsLiteral: string[] = [
-    "#btn1",
-    "#btn2",
-    "#btn3"
-];
+console.log("I work");
 
-class Game {
-    readonly DOMObjects!: HTMLElement[];
-    playerName: string;
+class GamePage {
+    public beginGame(): void {
+        console.log("game started");
 
-    public constructor(name: string) {
-        this.playerName = name;
-
-        DOMObjectsLiteral.forEach(element => {
-            this.DOMObjects.push(document.querySelector(element) as HTMLElement);
-        });
-    }
-
-    public start(): void {
-        
+        (async () => {
+            let opacity: number = 0;
+            do {
+                opacity += 0.05;
+                document.body.style.opacity = opacity.toString();
+                await new Promise(f => setTimeout(f, 30))
+            } while (document.body.style.opacity != "1")
+        })();
     }
 }
 
-const playerName: string | undefined = (document.querySelector("#inpName") as HTMLInputElement)?.value;
+class StartPage {
+    public Start(): void {
+        document.querySelector("#btnStart")?.addEventListener("click", function () {
+            window.location.href = "/dist/views/game.html";
+        });
+    }
+}
 
-document.querySelector("start")?.addEventListener("click", function() {
-    const game = new Game(playerName)
-    game.start();
-})
+function fireActionOnElement<T extends HTMLElement>(
+    elementId: string,
+    action: (element: T) => void
+): void {
+    const element = document.getElementById(elementId) as T | null;
+
+    if (element) {
+        action(element);
+    } else {
+        console.warn(`Element with id "${elementId}" not found.`);
+    }
+}
+
+window.addEventListener("load", function () {
+    switch (document.body.id) {
+        case "start":
+            const startPage = new StartPage();
+            startPage.Start();
+            break;
+        case "game":
+            const gamePage = new GamePage();
+            gamePage.beginGame();
+            break;
+        default:
+            console.warn("idk bru something ain't right");
+            break;
+    }
+});

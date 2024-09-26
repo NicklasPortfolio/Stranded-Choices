@@ -22,6 +22,7 @@ body {
   width: 800px;
   top: 50%;
   left: 50%;
+  z-index: 1;
   transform: translate(-50%, -50%);
 }
 
@@ -31,6 +32,7 @@ body {
   font-size: 34px;
   cursor: pointer;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  z-index: 2;
   transition: transform 0.3s ease;
 }
 
@@ -60,5 +62,6 @@ body {
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
   top: 15%;
   left: 50%;
+  z-index: 2;
   transform: translateX(-50%);
 }
