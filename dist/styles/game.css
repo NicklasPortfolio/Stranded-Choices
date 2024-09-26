@@ -1,36 +1,84 @@
+/* Custom Styles */
+*{
+    color: white;
+}
+
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden; /* Prevent scrolling */
   }
-
+  
   #game {
-    height: 100vh; /* Make sure the entire container uses the viewport height */
+    height: 100vh; /* Ensure the container uses the viewport height */
   }
-
+  
   .left-sidebar {
-    height: 80vh; /* Make the sidebar take up the full height */
+    height: 100vh; /* Sidebar spans the entire viewport height */
     background-color: #444444;
-    padding: 10px; /* Remove extra padding */
+    padding: 10px;
+    border-right: 2px solid #2d0303; /* Add a white border on the right side */
+  }
+  
+  .time, .inventory{
+    font-size: 24px;
   }
 
+  .character-img {
+    width: 200px; /* Width of the character image */
+    height: 100hv;
+    margin: 20px auto;
+    display: block; 
+  }
+  
+  .stats-container {
+    margin: 20px 0; /* Space above and below the stat bars */
+  }
+  
+  .stat-bar {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .stat-icon {
+    width: 100%; /* Icon size */
+  }
+  
   .main-image {
-    height: 100%; /* Take full height without padding */
+    height: 80vh; /* Image height is 80% of the viewport height */
     background: url('../img/Background-Sunrise.png') no-repeat center center;
     background-size: cover; /* Cover the area with the image */
     border: none;
     margin: 0;
     padding: 0;
   }
-
-  .time, .character, .stat-bar, .inventory {
-    margin-bottom: 15px;
-  }
-
+  
   .bottom-text {
+    height: 20vh; /* Take the remaining 20% of the viewport height */
     background-color: #444444;
-    height: 20vh; /* Reduced height for bottom text */
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 24px;
+    border-top: 2px solid #2d0303; /* Add a top border to the bottom text */
   }
+
+  .clickable-arrow {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .clickable-arrow:hover {
+    transform: translateY(-3px); /* Arrow moves slightly up on hover */
+  }
+  
