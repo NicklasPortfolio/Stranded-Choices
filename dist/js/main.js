@@ -8,27 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-console.log("I work");
+var FadeDirection;
+(function (FadeDirection) {
+    FadeDirection[FadeDirection["in"] = 0] = "in";
+    FadeDirection[FadeDirection["out"] = 1] = "out";
+})(FadeDirection || (FadeDirection = {}));
 class GamePage {
     beginGame() {
         console.log("game started");
-        (() => __awaiter(this, void 0, void 0, function* () {
-            let opacity = 0;
-            do {
-                opacity += 0.05;
-                document.body.style.opacity = opacity.toString();
-                yield new Promise(f => setTimeout(f, 30));
-            } while (document.body.style.opacity != "1");
-        }))();
+        fade(FadeDirection.in, 30, 0.025);
     }
 }
 class StartPage {
     Start() {
-        var _a, _b;
+        var _a;
         (_a = document.querySelector("#btnStart")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-            window.location.href = "/dist/views/game.html";
-        });
-        (_b = document.querySelector("#btnCredits")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                yield fade(FadeDirection.out, 30, 0.025);
+                window.location.href = "/dist/views/game.html";
+            });
         });
     }
 }
@@ -40,6 +38,29 @@ function fireActionOnElement(elementId, action) {
     else {
         console.warn(`Element with id "${elementId}" not found.`);
     }
+}
+function fade(direction, time, amount) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (direction === FadeDirection.in) {
+            let opacity = 0;
+            do {
+                opacity += amount;
+                document.body.style.opacity = opacity.toString();
+                yield new Promise(f => setTimeout(f, time));
+            } while (document.body.style.opacity != "1");
+        }
+        else if (direction = FadeDirection.out) {
+            let opacity = 1;
+            do {
+                opacity -= amount;
+                document.body.style.opacity = opacity.toString();
+                yield new Promise(f => setTimeout(f, time));
+            } while (document.body.style.opacity > "0");
+        }
+        else {
+            console.log("Unknown fade direction");
+        }
+    });
 }
 window.addEventListener("load", function () {
     switch (document.body.id) {

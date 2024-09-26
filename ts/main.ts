@@ -1,29 +1,22 @@
-console.log("I work");
+enum FadeDirection {
+    "in",
+    "out"
+}
 
 class GamePage {
     public beginGame(): void {
         console.log("game started");
 
-        (async () => {
-            let opacity: number = 0;
-            do {
-                opacity += 0.05;
-                document.body.style.opacity = opacity.toString();
-                await new Promise(f => setTimeout(f, 30))
-            } while (document.body.style.opacity != "1")
-        })();
+        fade(FadeDirection.in, 30, 0.025)
     }
 }
 
 class StartPage {
     public Start(): void {
-        document.querySelector("#btnStart")?.addEventListener("click", function () {
+        document.querySelector("#btnStart")?.addEventListener("click", async function () {
+            await fade(FadeDirection.out, 30, 0.025);
             window.location.href = "/dist/views/game.html";
         });
-
-        document.querySelector("#btnCredits")?.addEventListener("click", function () {
-
-        })
     }
 }
 
@@ -37,6 +30,26 @@ function fireActionOnElement<T extends HTMLElement>(
         action(element);
     } else {
         console.warn(`Element with id "${elementId}" not found.`);
+    }
+}
+
+async function fade(direction: FadeDirection, time: number, amount: number): Promise<void> {
+    if (direction === FadeDirection.in) {
+        let opacity: number = 0;
+        do {
+            opacity += amount;
+            document.body.style.opacity = opacity.toString();
+            await new Promise(f => setTimeout(f, time));
+        } while (document.body.style.opacity != "1");
+    } else if (direction = FadeDirection.out) {
+        let opacity: number = 1;
+        do {
+            opacity -= amount;
+            document.body.style.opacity = opacity.toString();
+            await new Promise(f => setTimeout(f, time));
+        } while (document.body.style.opacity > "0");
+    } else {
+        console.log("Unknown fade direction")
     }
 }
 
