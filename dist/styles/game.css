@@ -10,8 +10,8 @@ body, html {
   }
 
   .left-sidebar {
-    height: 200%; /* Make the sidebar take up the full height */
-    background-color: #f8f9fa;
+    height: 80vh; /* Make the sidebar take up the full height */
+    background-color: #444444;
     padding: 10px; /* Remove extra padding */
   }
 
@@ -29,14 +29,8 @@ body, html {
   }
 
   .bottom-text {
-    background-color: #e9ecef;
-    height: 60px; /* Reduced height for bottom text */
-    padding: 10px;
+    background-color: #444444;
+    height: 20vh; /* Reduced height for bottom text */
     display: flex;
     align-items: center;
-  }
-
-  .btn {
-    width: 100px; /* Adjust the button size */
-    height: 60px;
   }
