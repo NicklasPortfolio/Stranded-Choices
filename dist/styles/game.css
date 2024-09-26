@@ -20,7 +20,7 @@
     }
     .main-image {
       height: 80%;
-      background: url('https://via.placeholder.com/800x600') no-repeat center center;
+      background: url('../img/Background-Sunrise.png') no-repeat center center;
       background-size: cover;
     }
     .bottom-text {
