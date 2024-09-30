@@ -20,20 +20,23 @@ enum FadeDirection {
     "out"
 }
 
-class GamePage {
-    public beginGame(): void {
-        console.log("game started");
-        fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start, "textBox");
-    }
-}
-
 class StartPage {
     public Start(): void {
         document.querySelector("#btnStart")?.addEventListener("click", async function () {
             await fade(FadeDirection.out, 30, 0.025);
             window.location.href = "/dist/views/game.html";
         });
+    }
+}
+
+class GamePage {
+    public beginGame(): void {
+        console.log("game started");
+        fade(FadeDirection.in, 30, 0.025);
+        scrollTextOnElement(jsonData.Texts.Start, "textBox");
+        document.querySelector("#btnProgress")?.addEventListener("click", function () {
+            
+        })
     }
 }
 

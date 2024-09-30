@@ -30,13 +30,6 @@ var FadeDirection;
     FadeDirection[FadeDirection["in"] = 0] = "in";
     FadeDirection[FadeDirection["out"] = 1] = "out";
 })(FadeDirection || (FadeDirection = {}));
-class GamePage {
-    beginGame() {
-        console.log("game started");
-        fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start, "textBox");
-    }
-}
 class StartPage {
     Start() {
         var _a;
@@ -45,6 +38,16 @@ class StartPage {
                 yield fade(FadeDirection.out, 30, 0.025);
                 window.location.href = "/dist/views/game.html";
             });
+        });
+    }
+}
+class GamePage {
+    beginGame() {
+        var _a;
+        console.log("game started");
+        fade(FadeDirection.in, 30, 0.025);
+        scrollTextOnElement(jsonData.Texts.Start, "textBox");
+        (_a = document.querySelector("#btnProgress")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
         });
     }
 }
