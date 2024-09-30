@@ -8,6 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+let jsonData;
+function loadJSONData() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch("/dist/js/json/text.json");
+            if (!response.ok) {
+                throw new Error(`Failed to load JSON: ${response.statusText}`);
+            }
+            jsonData = yield response.json();
+            console.log(jsonData);
+        }
+        catch (error) {
+            console.log('Error loading JSON data:', error);
+        }
+    });
+}
+loadJSONData();
 var FadeDirection;
 (function (FadeDirection) {
     FadeDirection[FadeDirection["in"] = 0] = "in";
@@ -17,6 +34,7 @@ class GamePage {
     beginGame() {
         console.log("game started");
         fade(FadeDirection.in, 30, 0.025);
+        scrollTextOnElement(jsonData["Texts"]["Start"], "textBox");
     }
 }
 class StartPage {
@@ -29,6 +47,17 @@ class StartPage {
             });
         });
     }
+}
+function scrollTextOnElement(text, elementId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let textArray = Array.from(text);
+        for (let i = 0; i < textArray.length; i++) {
+            fireActionOnElement(elementId, function (element) {
+                element.innerHTML += textArray[i];
+            });
+            yield new Promise(f => setTimeout(f, 15));
+        }
+    });
 }
 function fireActionOnElement(elementId, action) {
     const element = document.getElementById(elementId);

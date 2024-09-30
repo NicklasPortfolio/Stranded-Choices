@@ -17,7 +17,7 @@ body, html {
     height: 100vh; 
     background-color: #444444;
     padding: 10px;
-    border-right: 2px solid white; 
+    border-right: 2px solid #fff; /* Add a white border on the right side */
   }
   
   .time, .inventory{
@@ -87,7 +87,7 @@ body, html {
     justify-content: space-between;
     padding: 10px;
     font-size: 24px;
-    border-top: 2px solid white;
+    border-top: 2px solid #2d0303; /* Add a top border to the bottom text */
   }
 
   .clickable-arrow {

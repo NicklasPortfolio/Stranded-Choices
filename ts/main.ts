@@ -1,3 +1,20 @@
+let jsonData: any;
+
+async function loadJSONData(): Promise<void> {
+    try {
+        const response = await fetch("/dist/js/json/text.json");
+        if (!response.ok) {
+            throw new Error(`Failed to load JSON: ${response.statusText}`);
+        }
+        jsonData = await response.json();
+        console.log(jsonData);
+    } catch (error) {
+        console.log('Error loading JSON data:', error);
+    }
+}
+
+loadJSONData();
+
 enum FadeDirection {
     "in",
     "out"
@@ -6,8 +23,8 @@ enum FadeDirection {
 class GamePage {
     public beginGame(): void {
         console.log("game started");
-
-        fade(FadeDirection.in, 30, 0.025)
+        fade(FadeDirection.in, 30, 0.025);
+        scrollTextOnElement(jsonData["Texts"]["Start"], "textBox");
     }
 }
 
@@ -17,6 +34,16 @@ class StartPage {
             await fade(FadeDirection.out, 30, 0.025);
             window.location.href = "/dist/views/game.html";
         });
+    }
+}
+
+async function scrollTextOnElement(text: string, elementId: string): Promise<void> {
+    let textArray: string[] = Array.from(text);
+    for (let i: number = 0; i < textArray.length; i++) {
+        fireActionOnElement(elementId, function (element) {
+            element.innerHTML += textArray[i];
+        })
+        await new Promise(f => setTimeout(f, 15));
     }
 }
 
