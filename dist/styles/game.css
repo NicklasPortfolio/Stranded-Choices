@@ -17,7 +17,16 @@ body, html {
     height: 100vh; 
     background-color: #444444;
     padding: 10px;
-    border-right: 2px solid #fff; /* Add a white border on the right side */
+    position: relative;
+  }
+
+  .sidebar-border {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 80.2vh; /* Adjust this value to end at the text div */
+    width: 2px;
+    background-color: #ffffff; /* Color of the dividing line */
   }
   
   .time, .inventory{
@@ -46,7 +55,7 @@ body, html {
   }
   
   .main-image {
-    height: 70vh;
+    height: 80vh;
     background: url('../img/Background-Sunrise.png') no-repeat center center;
     background-size: cover; 
     border: none;
@@ -65,7 +74,7 @@ body, html {
     border-top: 2px solid #fff; 
     z-index: 2;
   }
-  
+
   .option-btn {
     padding: 10px 20px;
     border: none;
@@ -88,7 +97,8 @@ body, html {
     justify-content: space-between;
     padding: 10px;
     font-size: 24px;
-    /* border-top: 2px solid #fff; */
+
+    border-top: 2px solid #fff; 
   }
 
   .clickable-arrow {
