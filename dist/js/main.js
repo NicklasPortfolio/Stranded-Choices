@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 let jsonData;
+let currentNode = "Start";
 function loadJSONData() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -25,6 +26,12 @@ function loadJSONData() {
     });
 }
 loadJSONData();
+const btn1 = document.querySelector("#btn1");
+;
+const btn2 = document.querySelector("#btn2");
+;
+const btn3 = document.querySelector("#btn3");
+;
 var FadeDirection;
 (function (FadeDirection) {
     FadeDirection[FadeDirection["in"] = 0] = "in";
@@ -46,13 +53,37 @@ class GamePage {
         var _a;
         console.log("game started");
         fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start, "textBox");
+        scrollTextOnElement(jsonData.Texts.Start);
         (_a = document.querySelector("#btnProgress")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
+            displayCurrentNode(currentNode);
         });
     }
 }
-function scrollTextOnElement(text, elementId) {
+function displayCurrentNode(nodeKey) {
+    const node = jsonData.Texts[nodeKey];
+    if (node) {
+        scrollTextOnElement(node.text);
+        displayOptions(node.options);
+    }
+    else {
+        console.log("End of the path or invalid node.");
+    }
+}
+function displayOptions(options) {
+    const buttons = [btn1, btn2, btn3];
+    options.forEach((option, index) => {
+        if (buttons[index]) {
+            buttons[index].textContent = option.choice;
+            buttons[index].onclick = () => {
+                currentNode = option.next;
+                displayCurrentNode(currentNode);
+            };
+        }
+    });
+}
+function scrollTextOnElement(text) {
     return __awaiter(this, void 0, void 0, function* () {
+        let elementId = "btnText";
         let textArray = Array.from(text);
         for (let i = 0; i < textArray.length; i++) {
             fireActionOnElement(elementId, function (element) {
