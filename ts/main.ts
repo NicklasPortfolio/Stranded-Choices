@@ -1,4 +1,5 @@
 let jsonData: any;
+let currentNode: string = "Start";
 
 async function loadJSONData(): Promise<void> {
     try {
@@ -14,6 +15,10 @@ async function loadJSONData(): Promise<void> {
 }
 
 loadJSONData();
+
+const btn1 = document.querySelector("#btn1") as HTMLButtonElement;;
+const btn2 = document.querySelector("#btn2") as HTMLButtonElement;;
+const btn3 = document.querySelector("#btn3") as HTMLButtonElement;;
 
 enum FadeDirection {
     "in",
@@ -33,14 +38,40 @@ class GamePage {
     public beginGame(): void {
         console.log("game started");
         fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start, "textBox");
+        scrollTextOnElement(jsonData.Texts.Start);
         document.querySelector("#btnProgress")?.addEventListener("click", function () {
-            
+            displayCurrentNode(currentNode);
         })
     }
 }
 
-async function scrollTextOnElement(text: string, elementId: string): Promise<void> {
+function displayCurrentNode(nodeKey: string): void {
+    const node = jsonData.Texts[nodeKey];
+    if (node) {
+        scrollTextOnElement(node.text);
+        displayOptions(node.options);
+    } else {
+        console.log("End of the path or invalid node.");
+    }
+}
+
+function displayOptions(options: {choice: string, next: string}[]): void {
+    const buttons = [btn1, btn2, btn3];
+
+    options.forEach((option, index) => {
+        if (buttons[index]) {
+            buttons[index].textContent = option.choice;
+
+            buttons[index].onclick = () => {
+                currentNode = option.next;
+                displayCurrentNode(currentNode);
+            }
+        }
+    })
+}
+
+async function scrollTextOnElement(text: string): Promise<void> {
+    let elementId: string = "btnText"
     let textArray: string[] = Array.from(text);
     for (let i: number = 0; i < textArray.length; i++) {
         fireActionOnElement(elementId, function (element) {
