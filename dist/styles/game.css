@@ -1,4 +1,3 @@
-/* Custom Styles */
 *{
     color: white;
 }
@@ -11,14 +10,14 @@ body, html {
   }
   
   #game {
-    height: 100vh; /* Ensure the container uses the viewport height */
+    height: 100vh;
   }
   
   .left-sidebar {
-    height: 100vh; /* Sidebar spans the entire viewport height */
+    height: 100vh; 
     background-color: #444444;
     padding: 10px;
-    border-right: 2px solid #2d0303; /* Add a white border on the right side */
+    border-right: 2px solid white; 
   }
   
   .time, .inventory{
@@ -33,7 +32,7 @@ body, html {
   }
   
   .stats-container {
-    margin: 20px 0; /* Space above and below the stat bars */
+    margin: 20px 0;
   }
   
   .stat-bar {
@@ -43,26 +42,52 @@ body, html {
   }
   
   .stat-icon {
-    width: 100%; /* Icon size */
+    width: 100%;
   }
   
   .main-image {
-    height: 80vh; /* Image height is 80% of the viewport height */
+    height: 70vh;
     background: url('../img/Background-Sunrise.png') no-repeat center center;
-    background-size: cover; /* Cover the area with the image */
+    background-size: cover; 
     border: none;
     margin: 0;
     padding: 0;
   }
+
+  .options-container {
+    height: 10vh;
+    background-color: #444444;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .option-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .option-btn:hover {
+    background-color: #777777;
+  }
   
   .bottom-text {
-    height: 20vh; /* Take the remaining 20% of the viewport height */
+    height: 20vh; 
     background-color: #444444;
     display: flex;
     justify-content: space-between;
     padding: 10px;
     font-size: 24px;
-    border-top: 2px solid #2d0303; /* Add a top border to the bottom text */
+    border-top: 2px solid white;
   }
 
   .clickable-arrow {
@@ -79,6 +104,6 @@ body, html {
   }
   
   .clickable-arrow:hover {
-    transform: translateY(-3px); /* Arrow moves slightly up on hover */
+    transform: translateY(-3px);
   }
   
