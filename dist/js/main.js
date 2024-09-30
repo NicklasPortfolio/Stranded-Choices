@@ -34,7 +34,7 @@ class GamePage {
     beginGame() {
         console.log("game started");
         fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData["Texts"]["Start"], "textBox");
+        scrollTextOnElement(jsonData.Texts.Start, "textBox");
     }
 }
 class StartPage {
