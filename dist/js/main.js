@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 let jsonData;
-let currentNode = "Start";
+let currentNode = "Item Choice";
 function loadJSONData() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -50,20 +50,26 @@ class StartPage {
 }
 class GamePage {
     beginGame() {
-        var _a;
-        console.log("game started");
         fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start);
-        (_a = document.querySelector("#btnProgress")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-            displayCurrentNode(currentNode);
-        });
+        scrollTextOnElement(jsonData.Texts.Start.text);
+        console.log("game started");
+        const btnProgress = document.querySelector("#btnProgress");
+        if (btnProgress) {
+            btnProgress.addEventListener("click", () => displayCurrentNode(currentNode));
+        }
+        else {
+            console.warn("btnProgress element not found!");
+        }
     }
 }
 function displayCurrentNode(nodeKey) {
+    console.log("works2");
     const node = jsonData.Texts[nodeKey];
     if (node) {
         scrollTextOnElement(node.text);
-        displayOptions(node.options);
+        if (node.options) {
+            displayOptions(node.options);
+        }
     }
     else {
         console.log("End of the path or invalid node.");
@@ -83,7 +89,7 @@ function displayOptions(options) {
 }
 function scrollTextOnElement(text) {
     return __awaiter(this, void 0, void 0, function* () {
-        let elementId = "btnText";
+        let elementId = "textBox";
         let textArray = Array.from(text);
         for (let i = 0; i < textArray.length; i++) {
             fireActionOnElement(elementId, function (element) {
