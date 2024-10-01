@@ -24,9 +24,9 @@ body, html {
     position: absolute;
     right: 0;
     top: 0;
-    height: 80.2vh; /* Adjust this value to end at the text div */
+    height: 80.2vh; 
     width: 2px;
-    background-color: #ffffff; /* Color of the dividing line */
+    background-color: #ffffff; 
   }
   
   .time, .inventory{
@@ -34,7 +34,7 @@ body, html {
   }
 
   .character-img {
-    width: 200px; /* Width of the character image */
+    width: 200px;
     height: 100hv;
     margin: 20px auto;
     display: block; 
@@ -64,28 +64,31 @@ body, html {
   }
 
   .suitcase-image {
+    display: none; /* Initially hidden */
     height: 80vh; 
     background: url('../img/suitcase.png') no-repeat center center;
     background-size: contain;
 }
 
+
 .items-images {
     display: flex;
-    justify-content: center; /* Centers items horizontally */
-    align-items: center; /* Centers items vertically */
-    height: 100%; /* Ensures it uses the full height of the suitcase */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 .item-image {
-    width: 100px; /* Set a fixed width for the item images */
-    height: auto; /* Maintain aspect ratio */
-    margin: 5px; /* Add some space between the images */
-    cursor: pointer; /* Change cursor to pointer for clickable effect */
-    transition: transform 0.3s; /* Adds a hover effect */
+    width: 100px; 
+    height: auto; 
+    margin: 5px; 
+    cursor: pointer; 
+    transition: transform 0.3s;
 }
 
 .item-image:hover {
-    transform: scale(1.6); /* Slightly enlarge image on hover */
+    transform: scale(1.6);
 }
 
   .options-container {
@@ -133,8 +136,8 @@ body, html {
     border-right: 15px solid transparent;
     border-top: 15px solid white;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 20px;
+    right: 20px;
     cursor: pointer;
     transition: transform 0.3s;
   }

@@ -169,7 +169,7 @@ window.addEventListener("load", function () {
             gamePage.beginGame();
             break;
         default:
-            console.warn("idk bru something ain't right");
+            console.warn("Unknown page ID");
             break;
     }
 });
