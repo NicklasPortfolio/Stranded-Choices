@@ -1,5 +1,5 @@
 let jsonData: any;
-let currentNode: string = "Start";
+let currentNode: string = "Item Choice";
 
 async function loadJSONData(): Promise<void> {
     try {
@@ -36,26 +36,32 @@ class StartPage {
 
 class GamePage {
     public beginGame(): void {
-        console.log("game started");
         fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start);
-        document.querySelector("#btnProgress")?.addEventListener("click", function () {
-            displayCurrentNode(currentNode);
-        })
+        scrollTextOnElement(jsonData.Texts.Start.text);
+        console.log("game started");
+        const btnProgress = document.querySelector("#btnProgress");
+        if (btnProgress) {
+            btnProgress.addEventListener("click", () => displayCurrentNode(currentNode));
+        } else {
+            console.warn("btnProgress element not found!");
+        }
     }
 }
 
 function displayCurrentNode(nodeKey: string): void {
+    console.log("works2");
     const node = jsonData.Texts[nodeKey];
     if (node) {
         scrollTextOnElement(node.text);
-        displayOptions(node.options);
+        if (node.options) {
+            displayOptions(node.options);
+        }
     } else {
         console.log("End of the path or invalid node.");
     }
 }
 
-function displayOptions(options: {choice: string, next: string}[]): void {
+function displayOptions(options: { choice: string, next: string }[]): void {
     const buttons = [btn1, btn2, btn3];
 
     options.forEach((option, index) => {
@@ -71,7 +77,7 @@ function displayOptions(options: {choice: string, next: string}[]): void {
 }
 
 async function scrollTextOnElement(text: string): Promise<void> {
-    let elementId: string = "btnText"
+    let elementId: string = "textBox"
     let textArray: string[] = Array.from(text);
     for (let i: number = 0; i < textArray.length; i++) {
         fireActionOnElement(elementId, function (element) {
@@ -129,3 +135,4 @@ window.addEventListener("load", function () {
             break;
     }
 });
+
