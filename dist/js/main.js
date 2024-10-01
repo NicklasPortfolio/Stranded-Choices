@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 let jsonData;
 let currentNode = "Item Choice";
 let playerInventory = [];
+// Load JSON Data
 function loadJSONData() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -19,7 +20,7 @@ function loadJSONData() {
                 throw new Error(`Failed to load JSON: ${response.statusText}`);
             }
             jsonData = yield response.json();
-            console.log(jsonData);
+            console.log("JSON Data Loaded:", jsonData);
         }
         catch (error) {
             console.log('Error loading JSON data:', error);
@@ -27,17 +28,18 @@ function loadJSONData() {
     });
 }
 loadJSONData();
+// HTML Button Elements
 const btn1 = document.querySelector("#btn1");
-;
 const btn2 = document.querySelector("#btn2");
-;
 const btn3 = document.querySelector("#btn3");
-;
+const btnProgress = document.querySelector("#btnProgress");
+// Enum for Fade Direction
 var FadeDirection;
 (function (FadeDirection) {
     FadeDirection[FadeDirection["in"] = 0] = "in";
     FadeDirection[FadeDirection["out"] = 1] = "out";
 })(FadeDirection || (FadeDirection = {}));
+// Start Page Class
 class StartPage {
     Start() {
         var _a;
@@ -49,6 +51,7 @@ class StartPage {
         });
     }
 }
+// Game Page Class
 class GamePage {
     beginGame() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -62,6 +65,7 @@ class GamePage {
 function displayCurrentNode(nodeKey) {
     return __awaiter(this, void 0, void 0, function* () {
         const node = jsonData.Texts[nodeKey];
+        const suitcaseElement = document.querySelector(".suitcase-image");
         if (node) {
             yield scrollTextOnElement(node.text);
             if (node.options) {
@@ -74,15 +78,17 @@ function displayCurrentNode(nodeKey) {
             }
         }
         else {
-            console.log("End of the path or invalid node.");
+            console.log("Invalid or end node.");
         }
     });
 }
+// Function to Display Options
 function displayOptions(options) {
     const buttons = [btn1, btn2, btn3];
     options.forEach((option, index) => {
         if (buttons[index]) {
             buttons[index].textContent = option.choice;
+            buttons[index].style.display = "block";
             buttons[index].onclick = () => {
                 currentNode = option.next;
                 displayCurrentNode(currentNode);
@@ -90,6 +96,7 @@ function displayOptions(options) {
         }
     });
 }
+// Scroll Text on Element
 function scrollTextOnElement(text) {
     return __awaiter(this, void 0, void 0, function* () {
         let elementId = "textBox";
@@ -105,6 +112,7 @@ function scrollTextOnElement(text) {
         }
     });
 }
+// Fire Action on an Element
 function fireActionOnElement(elementId, action) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -145,7 +153,7 @@ function fade(direction, time, amount) {
                 yield new Promise(f => setTimeout(f, time));
             } while (document.body.style.opacity != "1");
         }
-        else if (direction = FadeDirection.out) {
+        else if (direction === FadeDirection.out) {
             let opacity = 1;
             do {
                 opacity -= amount;
@@ -158,6 +166,7 @@ function fade(direction, time, amount) {
         }
     });
 }
+// Event Listener for Window Load
 window.addEventListener("load", function () {
     switch (document.body.id) {
         case "start":

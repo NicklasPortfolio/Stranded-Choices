@@ -68,22 +68,6 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
     }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    const btnProgress = document.querySelector("#btnProgress") as HTMLDivElement;
-
-    if (btnProgress) {
-        btnProgress.addEventListener("click", () => {
-            console.log("btnProgress clicked!");
-
-            // Update the text to indicate the next step
-            currentNode = "Item Choice";
-            displayCurrentNode(currentNode);
-        });
-    } else {
-        console.warn("btnProgress element not found in the DOM!");
-    }
-});
-
 // Function to Display Options
 function displayOptions(options: { choice: string, next: string }[]): void {
     const buttons = [btn1, btn2, btn3];
