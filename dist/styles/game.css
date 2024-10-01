@@ -64,12 +64,10 @@ body, html {
   }
 
   .suitcase-image {
-    display: none; /* Hide by default */
+    display: none; /* Initially hidden */
     height: 80vh; 
     background: url('../img/suitcase.png') no-repeat center center;
     background-size: contain;
-    justify-content: center;
-    align-items: center;
 }
 
 
