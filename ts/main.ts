@@ -1,5 +1,6 @@
 let jsonData: any;
 let currentNode: string = "Item Choice";
+let playerInventory: string[] = [];
 
 async function loadJSONData(): Promise<void> {
     try {
@@ -35,26 +36,24 @@ class StartPage {
 }
 
 class GamePage {
-    public beginGame(): void {
-        fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start.text);
-        console.log("game started");
-        const btnProgress = document.querySelector("#btnProgress");
-        if (btnProgress) {
-            btnProgress.addEventListener("click", () => displayCurrentNode(currentNode));
-        } else {
-            console.warn("btnProgress element not found!");
-        }
+    async beginGame(): Promise<void> {
+        await fade(FadeDirection.in, 30, 0.025);
+        await scrollTextOnElement(jsonData.Texts.Start.text);
+        document.querySelector("#btnProgress")?.addEventListener("click", () => displayCurrentNode(currentNode));
     }
 }
 
-function displayCurrentNode(nodeKey: string): void {
-    console.log("works2");
+async function displayCurrentNode(nodeKey: string): Promise<void> {
     const node = jsonData.Texts[nodeKey];
     if (node) {
-        scrollTextOnElement(node.text);
+        await scrollTextOnElement(node.text);
         if (node.options) {
             displayOptions(node.options);
+        }
+        if (currentNode == "Item Choice") {
+            await ChooseItems();
+            currentNode = node.next;
+            displayCurrentNode(currentNode);
         }
     } else {
         console.log("End of the path or invalid node.");
@@ -79,9 +78,12 @@ function displayOptions(options: { choice: string, next: string }[]): void {
 async function scrollTextOnElement(text: string): Promise<void> {
     let elementId: string = "textBox"
     let textArray: string[] = Array.from(text);
+    fireActionOnElement(elementId, function (element) {
+        element.textContent = "";
+    })
     for (let i: number = 0; i < textArray.length; i++) {
         fireActionOnElement(elementId, function (element) {
-            element.innerHTML += textArray[i];
+            element.textContent += textArray[i];
         })
         await new Promise(f => setTimeout(f, 15));
     }
@@ -98,6 +100,32 @@ function fireActionOnElement<T extends HTMLElement>(
     } else {
         console.warn(`Element with id "${elementId}" not found.`);
     }
+}
+
+function ChooseItems(): Promise<void> {
+    return new Promise((resolve) => {
+        const suitcase = document.querySelector("#suitcase")! as HTMLElement;
+        const items = document.querySelector("#items")!.children;
+        let amtItems = 0;
+
+        suitcase.style.display = "block";
+
+        for (let i: number = 0; i < items.length; i++) {
+            let itemType: string = items[i].id;
+
+            items[i].addEventListener("click", function () {
+                if (amtItems < 2 && !playerInventory.includes(itemType)) {
+                    playerInventory.push(itemType);
+                    amtItems++;
+
+                    if (amtItems === 2) {
+                        suitcase.style.display = "none";
+                        resolve();
+                    }
+                }
+            });
+        }
+    });
 }
 
 async function fade(direction: FadeDirection, time: number, amount: number): Promise<void> {

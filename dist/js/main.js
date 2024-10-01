@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 let jsonData;
 let currentNode = "Item Choice";
+let playerInventory = [];
 function loadJSONData() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -50,30 +51,32 @@ class StartPage {
 }
 class GamePage {
     beginGame() {
-        fade(FadeDirection.in, 30, 0.025);
-        scrollTextOnElement(jsonData.Texts.Start.text);
-        console.log("game started");
-        const btnProgress = document.querySelector("#btnProgress");
-        if (btnProgress) {
-            btnProgress.addEventListener("click", () => displayCurrentNode(currentNode));
-        }
-        else {
-            console.warn("btnProgress element not found!");
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            yield fade(FadeDirection.in, 30, 0.025);
+            yield scrollTextOnElement(jsonData.Texts.Start.text);
+            (_a = document.querySelector("#btnProgress")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => displayCurrentNode(currentNode));
+        });
     }
 }
 function displayCurrentNode(nodeKey) {
-    console.log("works2");
-    const node = jsonData.Texts[nodeKey];
-    if (node) {
-        scrollTextOnElement(node.text);
-        if (node.options) {
-            displayOptions(node.options);
+    return __awaiter(this, void 0, void 0, function* () {
+        const node = jsonData.Texts[nodeKey];
+        if (node) {
+            yield scrollTextOnElement(node.text);
+            if (node.options) {
+                displayOptions(node.options);
+            }
+            if (currentNode == "Item Choice") {
+                yield ChooseItems();
+                currentNode = node.next;
+                displayCurrentNode(currentNode);
+            }
         }
-    }
-    else {
-        console.log("End of the path or invalid node.");
-    }
+        else {
+            console.log("End of the path or invalid node.");
+        }
+    });
 }
 function displayOptions(options) {
     const buttons = [btn1, btn2, btn3];
@@ -91,9 +94,12 @@ function scrollTextOnElement(text) {
     return __awaiter(this, void 0, void 0, function* () {
         let elementId = "textBox";
         let textArray = Array.from(text);
+        fireActionOnElement(elementId, function (element) {
+            element.textContent = "";
+        });
         for (let i = 0; i < textArray.length; i++) {
             fireActionOnElement(elementId, function (element) {
-                element.innerHTML += textArray[i];
+                element.textContent += textArray[i];
             });
             yield new Promise(f => setTimeout(f, 15));
         }
@@ -107,6 +113,27 @@ function fireActionOnElement(elementId, action) {
     else {
         console.warn(`Element with id "${elementId}" not found.`);
     }
+}
+function ChooseItems() {
+    return new Promise((resolve) => {
+        const suitcase = document.querySelector("#suitcase");
+        const items = document.querySelector("#items").children;
+        let amtItems = 0;
+        suitcase.style.display = "block";
+        for (let i = 0; i < items.length; i++) {
+            let itemType = items[i].id;
+            items[i].addEventListener("click", function () {
+                if (amtItems < 2 && !playerInventory.includes(itemType)) {
+                    playerInventory.push(itemType);
+                    amtItems++;
+                    if (amtItems === 2) {
+                        suitcase.style.display = "none";
+                        resolve();
+                    }
+                }
+            });
+        }
+    });
 }
 function fade(direction, time, amount) {
     return __awaiter(this, void 0, void 0, function* () {
