@@ -64,10 +64,14 @@ body, html {
   }
 
   .suitcase-image {
+    display: none; /* Hide by default */
     height: 80vh; 
     background: url('../img/suitcase.png') no-repeat center center;
     background-size: contain;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .items-images {
     display: flex;
@@ -134,8 +138,8 @@ body, html {
     border-right: 15px solid transparent;
     border-top: 15px solid white;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 20px;
+    right: 20px;
     cursor: pointer;
     transition: transform 0.3s;
   }
