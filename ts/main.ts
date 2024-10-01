@@ -25,14 +25,14 @@ const btnProgress = document.querySelector("#btnProgress") as HTMLButtonElement;
 
 // Enum for Fade Direction
 enum FadeDirection {
-    in,
-    out
+    "in",
+    "out"
 }
 
 // Start Page Class
 class StartPage {
     public Start(): void {
-        document.querySelector("#btnStart")?.addEventListener("click", async () => {
+        document.querySelector("#btnStart")?.addEventListener("click", async function () {
             await fade(FadeDirection.out, 30, 0.025);
             window.location.href = "/dist/views/game.html";
         });
@@ -49,7 +49,6 @@ class GamePage {
         // Set up event listener for btnProgress
         if (btnProgress) {
             btnProgress.addEventListener("click", () => {
-                // Update to the next node
                 currentNode = jsonData.Texts[currentNode]?.next || "Item Choice";
                 displayCurrentNode(currentNode);
             });
@@ -89,6 +88,8 @@ function displayCurrentNode(nodeKey: string): void {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    const btnProgress = document.querySelector("#btnProgress") as HTMLDivElement;
+
     if (btnProgress) {
         btnProgress.addEventListener("click", () => {
             console.log("btnProgress clicked!");
@@ -120,8 +121,8 @@ function displayOptions(options: { choice: string, next: string }[]): void {
 
 // Scroll Text on Element
 async function scrollTextOnElement(text: string): Promise<void> {
-    const elementId: string = "textBox";
-    const textArray: string[] = Array.from(text);
+    let elementId: string = "textBox";
+    let textArray: string[] = Array.from(text);
 
     for (let i = 0; i < textArray.length; i++) {
         fireActionOnElement(elementId, function (element) {
