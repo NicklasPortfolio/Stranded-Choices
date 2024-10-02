@@ -51,7 +51,6 @@ class GamePage {
 
 async function displayCurrentNode(nodeKey: string): Promise<void> {
     const node = jsonData.Texts[nodeKey];
-    const suitcaseElement = document.querySelector(".suitcase-image") as HTMLElement;
 
     if (node) {
         await scrollTextOnElement(node.text);
