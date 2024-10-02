@@ -85,11 +85,17 @@ function displayCurrentNode(nodeKey) {
 // Function to Display Options
 function displayOptions(options) {
     const buttons = [btn1, btn2, btn3];
+    const mainImg = document.querySelector("#mainImg");
+    const optionsDiv = document.querySelector("#options");
+    mainImg.style.height = "70vh";
+    optionsDiv.style.display = "flex";
     options.forEach((option, index) => {
         if (buttons[index]) {
             buttons[index].textContent = option.choice;
             buttons[index].style.display = "block";
             buttons[index].onclick = () => {
+                mainImg.style.height = "80vh";
+                optionsDiv.style.display = "none";
                 currentNode = option.next;
                 displayCurrentNode(currentNode);
             };
@@ -130,11 +136,16 @@ function ChooseItems() {
         suitcase.style.display = "block";
         for (let i = 0; i < items.length; i++) {
             let itemType = items[i].id;
+            items[i].addEventListener("mouseover", function () {
+                scrollTextOnElement(jsonData.Texts["Item Choice"]["ItemTexts"][0][items[i].id]);
+            });
             items[i].addEventListener("click", function () {
-                if (amtItems < 2 && !playerInventory.includes(itemType)) {
+                if (amtItems < 3 && !playerInventory.includes(itemType)) {
+                    let item = items[i];
                     playerInventory.push(itemType);
+                    item.style.display = "none";
                     amtItems++;
-                    if (amtItems === 2) {
+                    if (amtItems === 3) {
                         suitcase.style.display = "none";
                         resolve();
                     }

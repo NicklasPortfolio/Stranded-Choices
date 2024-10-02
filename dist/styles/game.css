@@ -39,6 +39,16 @@ body, html {
     margin: 20px auto;
     display: block; 
   }
+
+  .inventory {
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+  .inventory:hover {
+    transform: translateY(5px);
+    transform: scale(1.2);
+  }
   
   .stats-container {
     margin: 20px 0;

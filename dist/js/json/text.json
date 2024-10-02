@@ -5,21 +5,28 @@
         "next": "ItemChoice"
       },
       "Item Choice": {
-        "text": "(In front of you see items, pick one)",
+        "text": "Before the darkness fully consumes the island, you spot a few items from the wreckage. You only have time to gather two of these to help you through the night. Choose wisely.",
         "ItemTexts": [
           {
-            "ExampleItem1": "(Vad item gör)",
-            "ExampleItem2": "Etc etc"
+            "bottle" :"(enough water for one day)",
+            "lighter" : "(low on fuel)",
+            "matches" :"(10 matches)",
+            "medkit" :"(basic supplies)",
+            "knife" :"(sharp and sturdy)",
+            "flashlight" :"(with limited battery)",
+            "tarp" : "(large enough to use as shelter)",
+            "trailmix" : "(enough food for one day)",
+            "flaregun" : "(1 flare)",
+            "fishingrod" : "(no bait)"
           }
         ],
         "next": "FirstNight"
       },
       "FirstNight": {
-        "text": "Night has fallen, what will you do?",
-        "options": [
-          {"choice": "kill myself", "next": ""},
-          {"choice": "kill myself", "next": ""},
-          {"choice": "kill myself", "next": ""}
+        "text": "Darkness settles in as you scramble to make a makeshift camp on the beach. The night brings with it eerie sounds: the rustling of leaves, the crashing of waves, and the occasional distant howl of animals. Exhausted, you lie down, hoping to get some sleep.",
+        "randomEvents": [
+            {"eventType": "rain", "probability": 0.25},
+            {"eventType": ""}
         ]
       }
     }
