@@ -65,7 +65,6 @@ class GamePage {
 function displayCurrentNode(nodeKey) {
     return __awaiter(this, void 0, void 0, function* () {
         const node = jsonData.Texts[nodeKey];
-        const suitcaseElement = document.querySelector(".suitcase-image");
         if (node) {
             yield scrollTextOnElement(node.text);
             if (node.options) {
