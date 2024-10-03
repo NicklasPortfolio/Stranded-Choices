@@ -112,7 +112,7 @@ function displayOptions(options) {
         }
     });
 }
-// Scroll Text on Element
+// Scroll Text on Selected Element 
 function scrollTextOnElement(text) {
     return __awaiter(this, void 0, void 0, function* () {
         let elementId = "textBox";
