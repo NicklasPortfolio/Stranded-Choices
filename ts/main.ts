@@ -1,6 +1,8 @@
 let jsonData: any;
+let isGenerating: boolean = false;
 let currentNode: string = "Item Choice";
 let playerInventory: string[] = [];
+
 
 // Load JSON Data
 async function loadJSONData(): Promise<void> {
@@ -34,7 +36,8 @@ enum FadeDirection {
 class StartPage {
     public Start(): void {
         document.querySelector("#btnStart")?.addEventListener("click", async function () {
-            await fade(FadeDirection.out, 30, 0.025);
+            const body: HTMLElement = document.querySelector("#start") as HTMLElement;
+            await fade(body, FadeDirection.out, 30, 0.025);
             window.location.href = "/dist/views/game.html";
         });
     }
@@ -43,7 +46,9 @@ class StartPage {
 // Game Page Class
 class GamePage {
     async beginGame(): Promise<void> {
-        await fade(FadeDirection.in, 30, 0.025);
+        const body: HTMLElement = document.querySelector("#game") as HTMLElement;
+        await fade(body, FadeDirection.in, 30, 0.025);
+        isGenerating = true;
         await scrollTextOnElement(jsonData.Texts.Start.text);
         document.querySelector("#btnProgress")?.addEventListener("click", () => displayCurrentNode(currentNode));
     }
@@ -53,14 +58,22 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
     const node = jsonData.Texts[nodeKey];
 
     if (node) {
+        isGenerating = true;
         await scrollTextOnElement(node.text);
         if (node.options) {
             displayOptions(node.options);
         }
-        if (currentNode == "Item Choice") {
-            await ChooseItems();
-            currentNode = node.next;
-            displayCurrentNode(currentNode);
+        switch (currentNode) {
+            case "Item Choice":
+                await ChooseItems();
+                currentNode = node.next;
+                displayCurrentNode(currentNode);
+                break;
+            case "FirstNight":
+
+                break;
+            default:
+                break;
         }
     } else {
         console.log("Invalid or end node.");
@@ -93,15 +106,18 @@ function displayOptions(options: { choice: string, next: string }[]): void {
 async function scrollTextOnElement(text: string): Promise<void> {
     let elementId: string = "textBox";
     let textArray: string[] = Array.from(text);
-    fireActionOnElement(elementId, function (element) {
-        element.textContent = "";
-    })
-    for (let i: number = 0; i < textArray.length; i++) {
+    if (isGenerating) {
         fireActionOnElement(elementId, function (element) {
-            element.textContent += textArray[i];
+            element.textContent = "";
         })
-        await new Promise(f => setTimeout(f, 15));
+        for (let i: number = 0; i < textArray.length; i++) {
+            fireActionOnElement(elementId, function (element) {
+                element.textContent += textArray[i];
+            })
+            await new Promise(f => setTimeout(f, 15));
+        }
     }
+    isGenerating = false;
 }
 
 // Fire Action on an Element
@@ -127,6 +143,7 @@ function ChooseItems(): Promise<void> {
             let itemType: string = items[i].id;
 
             items[i].addEventListener("mouseover", function () {
+                isGenerating = true;
                 scrollTextOnElement(jsonData.Texts["Item Choice"]["ItemTexts"][0][items[i].id]);
             })
 
@@ -147,21 +164,21 @@ function ChooseItems(): Promise<void> {
     });
 }
 
-async function fade(direction: FadeDirection, time: number, amount: number): Promise<void> {
+async function fade(object: HTMLElement, direction: FadeDirection, time: number, amount: number): Promise<void> {
     if (direction === FadeDirection.in) {
         let opacity: number = 0;
         do {
             opacity += amount;
-            document.body.style.opacity = opacity.toString();
+            object.style.opacity = opacity.toString();
             await new Promise(f => setTimeout(f, time));
-        } while (document.body.style.opacity != "1");
+        } while (object.style.opacity != "1");
     } else if (direction === FadeDirection.out) {
         let opacity: number = 1;
         do {
             opacity -= amount;
-            document.body.style.opacity = opacity.toString();
+            object.style.opacity = opacity.toString();
             await new Promise(f => setTimeout(f, time));
-        } while (document.body.style.opacity > "0");
+        } while (object.style.opacity > "0");
     } else {
         console.log("Unknown fade direction");
     }

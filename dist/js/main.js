@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 let jsonData;
+let isGenerating = false;
 let currentNode = "Item Choice";
 let playerInventory = [];
 // Load JSON Data
@@ -45,7 +46,8 @@ class StartPage {
         var _a;
         (_a = document.querySelector("#btnStart")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
             return __awaiter(this, void 0, void 0, function* () {
-                yield fade(FadeDirection.out, 30, 0.025);
+                const body = document.querySelector("#start");
+                yield fade(body, FadeDirection.out, 30, 0.025);
                 window.location.href = "/dist/views/game.html";
             });
         });
@@ -56,7 +58,9 @@ class GamePage {
     beginGame() {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
-            yield fade(FadeDirection.in, 30, 0.025);
+            const body = document.querySelector("#game");
+            yield fade(body, FadeDirection.in, 30, 0.025);
+            isGenerating = true;
             yield scrollTextOnElement(jsonData.Texts.Start.text);
             (_a = document.querySelector("#btnProgress")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => displayCurrentNode(currentNode));
         });
@@ -66,14 +70,21 @@ function displayCurrentNode(nodeKey) {
     return __awaiter(this, void 0, void 0, function* () {
         const node = jsonData.Texts[nodeKey];
         if (node) {
+            isGenerating = true;
             yield scrollTextOnElement(node.text);
             if (node.options) {
                 displayOptions(node.options);
             }
-            if (currentNode == "Item Choice") {
-                yield ChooseItems();
-                currentNode = node.next;
-                displayCurrentNode(currentNode);
+            switch (currentNode) {
+                case "Item Choice":
+                    yield ChooseItems();
+                    currentNode = node.next;
+                    displayCurrentNode(currentNode);
+                    break;
+                case "FirstNight":
+                    break;
+                default:
+                    break;
             }
         }
         else {
@@ -106,15 +117,18 @@ function scrollTextOnElement(text) {
     return __awaiter(this, void 0, void 0, function* () {
         let elementId = "textBox";
         let textArray = Array.from(text);
-        fireActionOnElement(elementId, function (element) {
-            element.textContent = "";
-        });
-        for (let i = 0; i < textArray.length; i++) {
+        if (isGenerating) {
             fireActionOnElement(elementId, function (element) {
-                element.textContent += textArray[i];
+                element.textContent = "";
             });
-            yield new Promise(f => setTimeout(f, 15));
+            for (let i = 0; i < textArray.length; i++) {
+                fireActionOnElement(elementId, function (element) {
+                    element.textContent += textArray[i];
+                });
+                yield new Promise(f => setTimeout(f, 15));
+            }
         }
+        isGenerating = false;
     });
 }
 // Fire Action on an Element
@@ -136,6 +150,7 @@ function ChooseItems() {
         for (let i = 0; i < items.length; i++) {
             let itemType = items[i].id;
             items[i].addEventListener("mouseover", function () {
+                isGenerating = true;
                 scrollTextOnElement(jsonData.Texts["Item Choice"]["ItemTexts"][0][items[i].id]);
             });
             items[i].addEventListener("click", function () {
@@ -153,23 +168,23 @@ function ChooseItems() {
         }
     });
 }
-function fade(direction, time, amount) {
+function fade(object, direction, time, amount) {
     return __awaiter(this, void 0, void 0, function* () {
         if (direction === FadeDirection.in) {
             let opacity = 0;
             do {
                 opacity += amount;
-                document.body.style.opacity = opacity.toString();
+                object.style.opacity = opacity.toString();
                 yield new Promise(f => setTimeout(f, time));
-            } while (document.body.style.opacity != "1");
+            } while (object.style.opacity != "1");
         }
         else if (direction === FadeDirection.out) {
             let opacity = 1;
             do {
                 opacity -= amount;
-                document.body.style.opacity = opacity.toString();
+                object.style.opacity = opacity.toString();
                 yield new Promise(f => setTimeout(f, time));
-            } while (document.body.style.opacity > "0");
+            } while (object.style.opacity > "0");
         }
         else {
             console.log("Unknown fade direction");
