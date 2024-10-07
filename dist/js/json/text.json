@@ -25,11 +25,27 @@
       "FirstNight": {
         "text": "Darkness settles in as you scramble to make a makeshift camp on the beach. The night brings with it eerie sounds: the rustling of leaves, the crashing of waves, and the occasional distant howl of animals. Exhausted, you lie down, hoping to get some sleep.",
         "randomEvents": [
-            {"eventType": "rain", "probability": 0.25},
-            {"eventType": "alge", "probability": 0.25},
-            {"eventType": "boar", "probability": 0.25}
+            {"eventType": "rain", "probability": 0, "next": "RainEvent"},
+            {"eventType": "alge", "probability": 1, "next": ""},
+            {"eventType": "boar", "probability": 2, "next": ""}
         ],
         "next": ""
+      },
+      "RainEvent": {
+        "text": "The island is unpredictable. In the middle of the night, you feel a drop of rain hit your face. Then another. Within minutes, it's a full-blown tropical downpour. You weren't prepared for this.",
+        "options": [
+          { "choice": "Find shelter", "next": "FindShelter" },
+          { "choice": "Stay put", "next": "StayPut" },
+          { "choice": "Use one of your items", "next": "RainEventItems" }
+        ]
+      },
+      "RainEventItems": {
+        "text": "You look at the items you have, and decide that some of them may be useful in this situation.",
+        "options": [
+          { "choice": "Box of matches", "next": "Matches/Lighter" },
+          { "choice": "Lighter", "next": "Matches/Lighter" },
+          { "choice": "Tarp", "next": "Tarp" }
+        ]
       }
     }
   }

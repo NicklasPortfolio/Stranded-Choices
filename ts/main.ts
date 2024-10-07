@@ -68,6 +68,9 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
             default:
                 break;
         }
+        if (node.randomEvents) {
+            randomEvent(node.randomEvents);
+        }
         if (node.options) {
             displayOptions(node.options);
         }
@@ -94,6 +97,28 @@ function displayOptions(options: { choice: string, next: string }[]): void {
                 currentNode = option.next;
                 displayCurrentNode(currentNode);
             };
+        }
+    });
+}
+
+function randomEvent(events: { eventType: string, probability: number, next: string }[]): void {
+    let random: number = Math.floor(Math.random() * 4);
+    console.log(random);
+
+    events.forEach(event => {
+        if (random === event.probability) {
+            switch (event.eventType) {
+                case "rain":
+                    ChangeBackground("Rain");
+                    currentNode = event.next;
+                    break;
+                case "alge":
+                    break;
+                case "boar":
+                    break;
+                default:
+                    break;
+            }
         }
     });
 }
