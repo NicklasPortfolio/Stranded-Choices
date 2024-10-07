@@ -26,7 +26,7 @@
         "text": "Darkness settles in as you scramble to make a makeshift camp on the beach. The night brings with it eerie sounds: the rustling of leaves, the crashing of waves, and the occasional distant howl of animals. Exhausted, you lie down, hoping to get some sleep.",
         "randomEvents": [
             {"eventType": "rain", "probability": 0.25},
-            {"eventType": "alge", "probability": 0.25},
+            {"eventType": "algae", "probability": 0.25},
             {"eventType": "boar", "probability": 0.25}
         ],
         "next": ""

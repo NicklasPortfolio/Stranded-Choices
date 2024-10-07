@@ -28,10 +28,6 @@ body, html {
     width: 2px;
     background-color: #ffffff; 
   }
-  
-  .time, .inventory{
-    font-size: 24px;
-  }
 
   .character-img {
     width: 200px;
@@ -46,6 +42,7 @@ body, html {
   }
 
   .inventory:hover {
+    font-size: 24px;
     transform: translateY(5px);
     transform: scale(1.2);
   }
@@ -67,6 +64,15 @@ body, html {
   .main-image {
     height: 80vh;
     background: url('../img/Background-Sunrise.png') no-repeat center center;
+    background-size: cover; 
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .extra-image {
+    height: 80vh;
+    background: url('../img/Rain.png') no-repeat center center;
     background-size: cover; 
     border: none;
     margin: 0;
