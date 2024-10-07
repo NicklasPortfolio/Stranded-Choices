@@ -19,19 +19,17 @@
         <div class="inventory text-center">Inventory</div>
         <div class="stats-container">
           <div class="stat-bar">
-            <img src="../img/health-bar100.png" alt="Health Icon" class="stat-icon">
+            <div class="progress" style="width: 100%;">
+              <div id="healthBar" class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
           </div>
-          <div class="stat-bar">
-            <img src="../img/health-bar100.png" alt="Hunger Icon" class="stat-icon">
-          </div>
-          <div class="stat-bar">
-            <img src="../img/health-bar100.png" alt="Energy Icon" class="stat-icon">
-          </div>
+          
         </div>
       </div>
       <div class="col-md-10 p-0">
         <!-- Main Image Change-->
         <div class="main-image" id="mainImg">
+          <div class="extra-image" id="extraImg" style="display: none;"></div>
             <!-- Suitcase Choice -->
             <div class="suitcase-image" id="suitcase" style="display: none;">
                 <div class="items-images" id="items">
