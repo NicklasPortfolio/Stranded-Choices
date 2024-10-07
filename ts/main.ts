@@ -96,7 +96,7 @@ function displayOptions(options: { choice: string, next: string }[]): void {
     });
 }
 
-// Scroll Text on Element
+// Scroll Text on Selected Element 
 async function scrollTextOnElement(text: string): Promise<void> {
     let elementId: string = "textBox";
     let textArray: string[] = Array.from(text);
