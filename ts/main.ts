@@ -34,7 +34,8 @@ enum FadeDirection {
 class StartPage {
     public Start(): void {
         document.querySelector("#btnStart")?.addEventListener("click", async function () {
-            await fade(FadeDirection.out, 30, 0.025);
+            const body: HTMLElement = document.body as HTMLElement;
+            await fade(body, FadeDirection.out, 30, 0.025);
             window.location.href = "/dist/views/game.html";
         });
     }
@@ -43,7 +44,8 @@ class StartPage {
 // Game Page Class
 class GamePage {
     async beginGame(): Promise<void> {
-        await fade(FadeDirection.in, 30, 0.025);
+        const body: HTMLElement = document.body as HTMLElement;
+        await fade(body, FadeDirection.in, 30, 0.025);
         await scrollTextOnElement(jsonData.Texts.Start.text);
         document.querySelector("#btnProgress")?.addEventListener("click", () => displayCurrentNode(currentNode));
     }
@@ -154,30 +156,30 @@ function ChooseItems(): Promise<void> {
     });
 }
 
-async function fade(direction: FadeDirection, time: number, amount: number): Promise<void> {
+async function fade(element: HTMLElement, direction: FadeDirection, time: number, amount: number): Promise<void> {
     if (direction === FadeDirection.in) {
         let opacity: number = 0;
         do {
             opacity += amount;
-            document.body.style.opacity = opacity.toString();
+            element.style.opacity = opacity.toString();
             await new Promise(f => setTimeout(f, time));
-        } while (document.body.style.opacity != "1");
+        } while (element.style.opacity != "1");
     } else if (direction === FadeDirection.out) {
         let opacity: number = 1;
         do {
             opacity -= amount;
-            document.body.style.opacity = opacity.toString();
+            element.style.opacity = opacity.toString();
             await new Promise(f => setTimeout(f, time));
-        } while (document.body.style.opacity > "0");
+        } while (element.style.opacity > "0");
     } else {
         console.log("Unknown fade direction");
     }
 }
 
 async function ChangeBackground(background: string) {
-    const backgroundImg: HTMLElement = document.querySelector("mainImg") as HTMLElement;
+    const backgroundImg: HTMLElement = document.querySelector("#mainImg") as HTMLElement;
     await fade(backgroundImg, FadeDirection.out, 30, 0.025);
-    backgroundImg.style.background = `../img/${background}.png`
+    backgroundImg.style.background = `url(../img/${background}.png) no-repeat center center`
     await fade(backgroundImg, FadeDirection.in, 30, 0.025);
 }
 

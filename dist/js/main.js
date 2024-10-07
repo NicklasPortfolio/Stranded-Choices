@@ -45,7 +45,8 @@ class StartPage {
         var _a;
         (_a = document.querySelector("#btnStart")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
             return __awaiter(this, void 0, void 0, function* () {
-                yield fade(FadeDirection.out, 30, 0.025);
+                const body = document.body;
+                yield fade(body, FadeDirection.out, 30, 0.025);
                 window.location.href = "/dist/views/game.html";
             });
         });
@@ -56,7 +57,8 @@ class GamePage {
     beginGame() {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
-            yield fade(FadeDirection.in, 30, 0.025);
+            const body = document.body;
+            yield fade(body, FadeDirection.in, 30, 0.025);
             yield scrollTextOnElement(jsonData.Texts.Start.text);
             (_a = document.querySelector("#btnProgress")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => displayCurrentNode(currentNode));
         });
@@ -66,7 +68,6 @@ function displayCurrentNode(nodeKey) {
     return __awaiter(this, void 0, void 0, function* () {
         const node = jsonData.Texts[nodeKey];
         if (node) {
-            isGenerating = true;
             yield scrollTextOnElement(node.text);
             switch (currentNode) {
                 case "Item Choice":
@@ -161,23 +162,23 @@ function ChooseItems() {
         }
     });
 }
-function fade(direction, time, amount) {
+function fade(element, direction, time, amount) {
     return __awaiter(this, void 0, void 0, function* () {
         if (direction === FadeDirection.in) {
             let opacity = 0;
             do {
                 opacity += amount;
-                document.body.style.opacity = opacity.toString();
+                element.style.opacity = opacity.toString();
                 yield new Promise(f => setTimeout(f, time));
-            } while (document.body.style.opacity != "1");
+            } while (element.style.opacity != "1");
         }
         else if (direction === FadeDirection.out) {
             let opacity = 1;
             do {
                 opacity -= amount;
-                document.body.style.opacity = opacity.toString();
+                element.style.opacity = opacity.toString();
                 yield new Promise(f => setTimeout(f, time));
-            } while (document.body.style.opacity > "0");
+            } while (element.style.opacity > "0");
         }
         else {
             console.log("Unknown fade direction");
@@ -186,9 +187,9 @@ function fade(direction, time, amount) {
 }
 function ChangeBackground(background) {
     return __awaiter(this, void 0, void 0, function* () {
-        const backgroundImg = document.querySelector("mainImg");
+        const backgroundImg = document.querySelector("#mainImg");
         yield fade(backgroundImg, FadeDirection.out, 30, 0.025);
-        backgroundImg.style.background = `../img/${background}.png`;
+        backgroundImg.style.background = `url(../img/${background}.png) no-repeat center center`;
         yield fade(backgroundImg, FadeDirection.in, 30, 0.025);
     });
 }
