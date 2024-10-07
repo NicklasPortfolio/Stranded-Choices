@@ -60,9 +60,6 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
     if (node) {
         isGenerating = true;
         await scrollTextOnElement(node.text);
-        if (node.options) {
-            displayOptions(node.options);
-        }
         switch (currentNode) {
             case "Item Choice":
                 await ChooseItems();
@@ -70,10 +67,13 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
                 displayCurrentNode(currentNode);
                 break;
             case "FirstNight":
-
+                ChangeBackground("night");
                 break;
             default:
                 break;
+        }
+        if (node.options) {
+            displayOptions(node.options);
         }
     } else {
         console.log("Invalid or end node.");
@@ -182,6 +182,13 @@ async function fade(object: HTMLElement, direction: FadeDirection, time: number,
     } else {
         console.log("Unknown fade direction");
     }
+}
+
+async function ChangeBackground(background: string) {
+    const backgroundImg: HTMLElement = document.querySelector("mainImg") as HTMLElement;
+    await fade(backgroundImg, FadeDirection.out, 30, 0.025);
+    backgroundImg.style.background = `../img/${background}.png`
+    await fade(backgroundImg, FadeDirection.in, 30, 0.025);
 }
 
 // Event Listener for Window Load

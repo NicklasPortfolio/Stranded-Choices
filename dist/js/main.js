@@ -72,9 +72,6 @@ function displayCurrentNode(nodeKey) {
         if (node) {
             isGenerating = true;
             yield scrollTextOnElement(node.text);
-            if (node.options) {
-                displayOptions(node.options);
-            }
             switch (currentNode) {
                 case "Item Choice":
                     yield ChooseItems();
@@ -82,9 +79,13 @@ function displayCurrentNode(nodeKey) {
                     displayCurrentNode(currentNode);
                     break;
                 case "FirstNight":
+                    ChangeBackground("night");
                     break;
                 default:
                     break;
+            }
+            if (node.options) {
+                displayOptions(node.options);
             }
         }
         else {
@@ -189,6 +190,14 @@ function fade(object, direction, time, amount) {
         else {
             console.log("Unknown fade direction");
         }
+    });
+}
+function ChangeBackground(background) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const backgroundImg = document.querySelector("mainImg");
+        yield fade(backgroundImg, FadeDirection.out, 30, 0.025);
+        backgroundImg.style.background = `../img/${background}.png`;
+        yield fade(backgroundImg, FadeDirection.in, 30, 0.025);
     });
 }
 // Event Listener for Window Load
