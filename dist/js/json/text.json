@@ -42,7 +42,7 @@
       "RainEventItems": {
         "text": "You look at the items you have, and decide that some of them may be useful in this situation.",
         "options": [
-          { "choice": "Box of matches", "next": "Matches/Lighter" },
+          { "choice": "Matches", "next": "Matches/Lighter" },
           { "choice": "Lighter", "next": "Matches/Lighter" },
           { "choice": "Tarp", "next": "Tarp" }
         ]

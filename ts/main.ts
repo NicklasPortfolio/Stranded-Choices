@@ -1,6 +1,18 @@
 let jsonData: any;
 let currentNode: string = "Item Choice";
 let playerInventory: string[] = [];
+let items: string[] = [
+    "bottle",
+    "lighter",
+    "matches",
+    "medkit",
+    "knife",
+    "flashlight",
+    "tarp",
+    "trailmix",
+    "flaregun",
+    "fishingrod"
+]
 
 // Load JSON Data
 async function loadJSONData(): Promise<void> {
@@ -92,24 +104,35 @@ function displayOptions(options: { choice: string, next: string }[]): void {
             buttons[index].textContent = option.choice;
             buttons[index].style.display = "block";
             buttons[index].onclick = () => {
-                mainImg.style.height = "80vh";
-                optionsDiv.style.display = "none";
-                currentNode = option.next;
-                displayCurrentNode(currentNode);
+                if (items.indexOf(option.choice.toLowerCase()) > -1) {
+                    if (playerInventory.indexOf(option.choice.toLowerCase()) > -1) {
+                        mainImg.style.height = "80vh";
+                        optionsDiv.style.display = "none";
+                        currentNode = option.next;
+                        displayCurrentNode(currentNode);
+                    } else {
+                        scrollTextOnElement("You don't have that item...")
+                    }
+                } else {
+                    mainImg.style.height = "80vh";
+                    optionsDiv.style.display = "none";
+                    currentNode = option.next;
+                    displayCurrentNode(currentNode);
+                }
             };
         }
     });
 }
 
 function randomEvent(events: { eventType: string, probability: number, next: string }[]): void {
-    let random: number = Math.floor(Math.random() * 4);
+    let random: number = 0 // Math.floor(Math.random() * 4);
     console.log(random);
 
     events.forEach(event => {
         if (random === event.probability) {
             switch (event.eventType) {
                 case "rain":
-                    ChangeBackground("Rain");
+                    ChangeExtraBackground("Rain");
                     currentNode = event.next;
                     break;
                 case "alge":
@@ -203,6 +226,14 @@ async function fade(element: HTMLElement, direction: FadeDirection, time: number
 
 async function ChangeBackground(background: string) {
     const backgroundImg: HTMLElement = document.querySelector("#mainImg") as HTMLElement;
+    await fade(backgroundImg, FadeDirection.out, 30, 0.025);
+    backgroundImg.style.background = `url(../img/${background}.png) no-repeat center center`
+    await fade(backgroundImg, FadeDirection.in, 30, 0.025);
+}
+
+async function ChangeExtraBackground(background: string) {
+    const backgroundImg: HTMLElement = document.querySelector("#extraImg") as HTMLElement;
+    backgroundImg.style.display = "block";
     await fade(backgroundImg, FadeDirection.out, 30, 0.025);
     backgroundImg.style.background = `url(../img/${background}.png) no-repeat center center`
     await fade(backgroundImg, FadeDirection.in, 30, 0.025);
