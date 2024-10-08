@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 let jsonData;
 let currentNode = "Item Choice";
 let playerInventory = [];
-let items = [
+let itemsList = [
     "bottle",
     "lighter",
     "matches",
@@ -81,17 +81,16 @@ function displayCurrentNode(nodeKey) {
         const node = jsonData.Texts[nodeKey];
         if (node) {
             yield scrollTextOnElement(node.text);
-            switch (currentNode) {
-                case "Item Choice":
-                    yield ChooseItems();
-                    currentNode = node.next;
-                    displayCurrentNode(currentNode);
-                    break;
-                case "FirstNight":
-                    ChangeBackground("night");
-                    break;
-                default:
-                    break;
+            if (currentNode === "Item Choice") {
+                yield ChooseItems();
+                currentNode = node.next;
+                displayCurrentNode(currentNode);
+            }
+            if (node.background) {
+                ChangeBackground(node.background);
+            }
+            if (node.extraBackground) {
+                ChangeExtraBackground(node.extraBackground);
             }
             if (node.randomEvents) {
                 randomEvent(node.randomEvents);
@@ -117,7 +116,21 @@ function displayOptions(options) {
             buttons[index].textContent = option.choice;
             buttons[index].style.display = "block";
             buttons[index].onclick = () => {
-                if (items.indexOf(option.choice.toLowerCase()) > -1) {
+                if (option.itemsFlag) {
+                    const hasItem = option.itemsFlag.some(item => playerInventory.indexOf(item) > -1);
+                    if (hasItem) {
+                        mainImg.style.height = "80vh";
+                        optionsDiv.style.display = "none";
+                        currentNode = option.next;
+                        displayCurrentNode(currentNode);
+                        return;
+                    }
+                    else {
+                        scrollTextOnElement("You don't have any items useful for this situation...");
+                        return;
+                    }
+                }
+                if (itemsList.indexOf(option.choice.toLowerCase()) > -1) {
                     if (playerInventory.indexOf(option.choice.toLowerCase()) > -1) {
                         mainImg.style.height = "80vh";
                         optionsDiv.style.display = "none";

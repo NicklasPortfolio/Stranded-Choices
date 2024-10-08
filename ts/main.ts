@@ -1,7 +1,7 @@
 let jsonData: any;
 let currentNode: string = "Item Choice";
 let playerInventory: string[] = [];
-let items: string[] = [
+let itemsList: string[] = [
     "bottle",
     "lighter",
     "matches",
@@ -68,17 +68,16 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
 
     if (node) {
         await scrollTextOnElement(node.text);
-        switch (currentNode) {
-            case "Item Choice":
-                await ChooseItems();
-                currentNode = node.next;
-                displayCurrentNode(currentNode);
-                break;
-            case "FirstNight":
-                ChangeBackground("night");
-                break;
-            default:
-                break;
+        if (currentNode === "Item Choice") {
+            await ChooseItems();
+            currentNode = node.next;
+            displayCurrentNode(currentNode);
+        }
+        if (node.background) {
+            ChangeBackground(node.background);
+        }
+        if (node.extraBackground) {
+            ChangeExtraBackground(node.extraBackground);
         }
         if (node.randomEvents) {
             randomEvent(node.randomEvents);
@@ -92,7 +91,7 @@ async function displayCurrentNode(nodeKey: string): Promise<void> {
 }
 
 // Function to Display Options
-function displayOptions(options: { choice: string, next: string }[]): void {
+function displayOptions(options: { choice: string, next: string, itemsFlag?: string[] }[]): void {
     const buttons = [btn1, btn2, btn3];
     const mainImg = document.querySelector("#mainImg") as HTMLElement;
     const optionsDiv = document.querySelector("#options") as HTMLElement;
@@ -104,7 +103,20 @@ function displayOptions(options: { choice: string, next: string }[]): void {
             buttons[index].textContent = option.choice;
             buttons[index].style.display = "block";
             buttons[index].onclick = () => {
-                if (items.indexOf(option.choice.toLowerCase()) > -1) {
+                if (option.itemsFlag) {
+                    const hasItem: boolean = option.itemsFlag.some(item => playerInventory.indexOf(item) > -1)
+                    if (hasItem) {
+                        mainImg.style.height = "80vh";
+                        optionsDiv.style.display = "none";
+                        currentNode = option.next;
+                        displayCurrentNode(currentNode);
+                        return;
+                    } else {
+                        scrollTextOnElement("You don't have any items useful for this situation...")
+                        return;
+                    }
+                }
+                if (itemsList.indexOf(option.choice.toLowerCase()) > -1) {
                     if (playerInventory.indexOf(option.choice.toLowerCase()) > -1) {
                         mainImg.style.height = "80vh";
                         optionsDiv.style.display = "none";

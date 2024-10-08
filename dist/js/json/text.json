@@ -1,52 +1,96 @@
 {
-    "Texts": {
-      "Start": {
-        "text": "You wake up on the beach. Your plane has crashed, and no one else survived. You are alone on a deserted island, miles from civilization, with nothing but debris scattered around. The sun is setting, and you realize that you must survive the night. Rescue could take days, or even weeks.",
-        "next": "ItemChoice"
-      },
-      "Item Choice": {
-        "text": "Before the darkness fully consumes the island, you spot a few items from the wreckage. You only have time to gather two of these to help you through the night. Choose wisely.",
-        "ItemTexts": [
-          {
-            "bottle" :"(enough water for one day)",
-            "lighter" : "(low on fuel)",
-            "matches" :"(10 matches)",
-            "medkit" :"(basic supplies)",
-            "knife" :"(sharp and sturdy)",
-            "flashlight" :"(with limited battery)",
-            "tarp" : "(large enough to use as shelter)",
-            "trailmix" : "(enough food for one day)",
-            "flaregun" : "(1 flare)",
-            "fishingrod" : "(no bait)"
-          }
-        ],
-        "next": "FirstNight"
-      },
-      "FirstNight": {
-        "text": "Darkness settles in as you scramble to make a makeshift camp on the beach. The night brings with it eerie sounds: the rustling of leaves, the crashing of waves, and the occasional distant howl of animals. Exhausted, you lie down, hoping to get some sleep.",
-        "randomEvents": [
-            {"eventType": "rain", "probability": 0, "next": "RainEvent"},
-            {"eventType": "alge", "probability": 1, "next": ""},
-            {"eventType": "boar", "probability": 2, "next": ""}
-        ],
-        "next": ""
-      },
-      "RainEvent": {
-        "text": "The island is unpredictable. In the middle of the night, you feel a drop of rain hit your face. Then another. Within minutes, it's a full-blown tropical downpour. You weren't prepared for this.",
-        "options": [
-          { "choice": "Find shelter", "next": "FindShelter" },
-          { "choice": "Stay put", "next": "StayPut" },
-          { "choice": "Use one of your items", "next": "RainEventItems" }
-        ]
-      },
-      "RainEventItems": {
-        "text": "You look at the items you have, and decide that some of them may be useful in this situation.",
-        "options": [
-          { "choice": "Matches", "next": "Matches/Lighter" },
-          { "choice": "Lighter", "next": "Matches/Lighter" },
-          { "choice": "Tarp", "next": "Tarp" }
-        ]
-      }
+  "Texts": {
+    "Start": {
+      "text": "You wake up on the beach. Your plane has crashed, and no one else survived. You are alone on a deserted island, miles from civilization, with nothing but debris scattered around. The sun is setting, and you realize that you must survive the night. Rescue could take days, or even weeks.",
+      "next": "ItemChoice"
+    },
+    "Item Choice": {
+      "text": "Before the darkness fully consumes the island, you spot a few items from the wreckage. You only have time to gather two of these to help you through the night. Choose wisely.",
+      "ItemTexts": [
+        {
+          "bottle": "(enough water for one day)",
+          "lighter": "(low on fuel)",
+          "matches": "(10 matches)",
+          "medkit": "(basic supplies)",
+          "knife": "(sharp and sturdy)",
+          "flashlight": "(with limited battery)",
+          "tarp": "(large enough to use as shelter)",
+          "trailmix": "(enough food for one day)",
+          "flaregun": "(1 flare)",
+          "fishingrod": "(no bait)"
+        }
+      ],
+      "next": "FirstNight"
+    },
+    "FirstNight": {
+      "text": "Darkness settles in as you scramble to make a makeshift camp on the beach. The night brings with it eerie sounds: the rustling of leaves, the crashing of waves, and the occasional distant howl of animals. Exhausted, you lie down, hoping to get some sleep.",
+      "background": "night",
+      "randomEvents": [
+        {
+          "eventType": "rain",
+          "probability": 0,
+          "next": "RainEvent"
+        },
+        {
+          "eventType": "alge",
+          "probability": 1,
+          "next": ""
+        },
+        {
+          "eventType": "boar",
+          "probability": 2,
+          "next": ""
+        }
+      ],
+      "next": ""
+    },
+    "RainEvent": {
+      "text": "The island is unpredictable. In the middle of the night, you feel a drop of rain hit your face. Then another. Within minutes, it's a full-blown tropical downpour. You weren't prepared for this.",
+      "options": [
+        {
+          "choice": "Find shelter",
+          "next": "FindShelter"
+        },
+        {
+          "choice": "Stay put",
+          "next": "StayPut"
+        },
+        {
+          "choice": "Use one of your items",
+          "next": "RainEventItems",
+          "itemsFlag": [
+            "matches",
+            "lighter",
+            "tarp"
+          ]
+        }
+      ]
+    },
+    "FindShelter": {
+      "text": "You sprint through the darkness, searching for anything that might serve as protection. After a few minutes, you find a cluster of trees that provide some relief, but you're already drenched by the time you get there. The night will be cold and uncomfortable.",
+      "extraBackground": "treesNight",
+      "next": "LightEvent"
+    },
+    "StayPut": {
+      "text": "You decide to tough it out. The rain beats down on you, soaking your clothes and leaving you shivering, but it eventually passes. As the cold sets in, you wonder if this was the right call.",
+      "next": "LightEvent"
+    },
+    "RainEventItems": {
+      "text": "You look at the items you have, and decide that some of them may be useful in this situation.",
+      "options": [
+        {
+          "choice": "Matches",
+          "next": "Matches/Lighter"
+        },
+        {
+          "choice": "Lighter",
+          "next": "Matches/Lighter"
+        },
+        {
+          "choice": "Tarp",
+          "next": "Tarp"
+        }
+      ]
     }
   }
-  
+}
